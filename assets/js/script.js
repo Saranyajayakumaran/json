@@ -1,4 +1,4 @@
-const API_KEY = "96K3oZps6d53X71rHjgaKouWFY8123";//ApI key
+const API_KEY = "96K3oZps6d53X71rHjgaKouWFY8";//ApI key
 const API_URL = "https://ci-jshint.herokuapp.com/api";
 const resultsModal = new bootstrap.Modal(document.getElementById("resultsModal"));
 
@@ -13,11 +13,22 @@ async function getStatus(e) {
     const data = await response.json();
 
     if (response.ok) {
-        console.log(data);
+        displayStatus(data);
     }
     else{
         throw new Error(data.error);
 
     }
+}
+
+function displayStatus(data) {
+
+    let heading = "API Key Status";
+    let results = `<div>Your key is valid until</div>`;
+    results += `<div class="key-status">${data.expiry}</div>`;
+
+    document.getElementById("resultsModalTitle").innerText = heading;
+    document.getElementById("results-content").innerHTML = results;
+    resultsModal.show();
 
 }
